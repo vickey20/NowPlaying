@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NowPlaying</string>
+    <string name="service_name">NotificationService</string>
 </resources>

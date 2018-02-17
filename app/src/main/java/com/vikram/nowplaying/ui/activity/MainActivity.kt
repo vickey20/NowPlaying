@@ -1,7 +1,8 @@
-package com.vikram.nowplaying
+package com.vikram.nowplaying.ui.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.vikram.nowplaying.R
 
 class MainActivity : AppCompatActivity() {
 
