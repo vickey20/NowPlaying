@@ -1,18 +1,17 @@
 package com.vikram.nowplaying.repo
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import com.vikram.nowplaying.db.AppDatabase
 import com.vikram.nowplaying.db.Song
 import com.vikram.nowplaying.db.SongDao
-import java.util.concurrent.Executors
+import kotlinx.coroutines.experimental.*
 
 class SongsRepo {
 
     private var songsDao: SongDao? = null
     private var songs: LiveData<List<Song>>? = null
-    private var executorService = Executors.newSingleThreadExecutor()
+    //private var executorService = Executors.newSingleThreadExecutor()
 
     init {
         var db = AppDatabase.getDatabase(context?.applicationContext!!)
@@ -32,11 +31,31 @@ class SongsRepo {
         }
     }
 
-    fun saveSong(song: Song) {
-        executorService.execute { songsDao?.insert(song) }
-    }
+//    fun saveSong(song: Song) {
+//        if (shouldSaveToDB(song)) {
+//            executorService.execute { songsDao?.insert(song) }
+//        }
+//    }
 
     fun getAllSongs(): LiveData<List<Song>>? {
         return songsDao?.getAllSongs()
+    }
+
+    private fun shouldSaveToDB(song: Song): Boolean {
+        return songsDao?.getLatestSong()?.songText != song.songText
+    }
+
+    fun saveSong(song: Song) {
+        GlobalScope.launch{
+//            val latestSong = async { songsDao?.getLatestSong() }.await()
+//            if (latestSong?.songText != song.songText) {
+//                async { songsDao?.insert(song) }
+//            }
+
+            val shouldSaveToDb = async { shouldSaveToDB(song) }.await()
+            if (shouldSaveToDb) {
+                async { songsDao?.insert(song) }
+            }
+        }
     }
 }

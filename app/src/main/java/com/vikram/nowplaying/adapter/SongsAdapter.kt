@@ -16,6 +16,7 @@ class SongsAdapter: RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
         fun bind(song: Song) {
             itemView.tvSongName.text = song.title
             itemView.tvArtistName.text = song.artist
+            itemView.tvTime.text = song.getLaymanTime()
         }
     }
 
@@ -34,7 +35,6 @@ class SongsAdapter: RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(songs[position])
     }
-
 }
 
 private fun ViewGroup.inflate(songs_list_item: Int): View {
