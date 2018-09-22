@@ -18,5 +18,9 @@ interface SongDao {
     fun delete(song: Song)
 
     @Query("SELECT * FROM songs ORDER BY id DESC")
-    abstract fun getAllSongs(): LiveData<List<Song>>
+    fun getAllSongs(): LiveData<List<Song>>
+
+    @Query("SELECT * FROM songs WHERE timestamp = (SELECT MAX(timestamp) FROM songs)")
+    fun getLatestSong(): Song
+
 }
