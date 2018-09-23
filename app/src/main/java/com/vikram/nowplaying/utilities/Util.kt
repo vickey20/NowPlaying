@@ -9,51 +9,53 @@ import android.support.v4.content.ContextCompat
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Tasks
 
-private const val second = 1
-private const val minute = second * 60
-private const val hour = minute * 60
-private const val day = hour * 24
-private const val month = day * 30
-private const val year = month * 12
+private const val SECOND = 1
+private const val MINUTE = SECOND * 60
+private const val HOUR = MINUTE * 60
+private const val DAY = HOUR * 24
+private const val MONTH = DAY * 30
+private const val YEAR = MONTH * 12
+
+private const val SPLIT_BY = " by "
 
 fun getMinutes(seconds: Long): Long {
-    return seconds / minute
+    return seconds / MINUTE
 }
 
 fun getHours(seconds: Long): Long {
-    return seconds / hour
+    return seconds / HOUR
 }
 
 fun getDays(seconds: Long): Long {
-    return seconds / day
+    return seconds / DAY
 }
 
 fun getMonths(seconds: Long): Long {
-    return seconds / month
+    return seconds / MONTH
 }
 
 fun getYears(seconds: Long): Long {
-    return seconds / year
+    return seconds / YEAR
 }
 
 fun Long.laymanTime(): String {
     var curr = System.currentTimeMillis()
     var elapsedTime = (curr - this) / 1000
     return when (elapsedTime) {
-        in 0..minute -> "moments ago"
-        in minute..hour -> {
+        in 0..MINUTE -> "moments ago"
+        in MINUTE..HOUR -> {
             val minutes = getMinutes(elapsedTime)
             return if (minutes > 1) "$minutes mins ago" else "$minutes min ago"
         }
-        in hour..day -> {
+        in HOUR..DAY -> {
             val hours = getHours(elapsedTime)
             return if (hours > 1) "$hours hrs ago" else "$hours hr ago"
         }
-        in day..month -> {
+        in DAY..MONTH -> {
             val days = getDays(elapsedTime)
             return if (days > 1) "$days days ago" else "$days day ago"
         }
-        in day..year -> {
+        in DAY..YEAR -> {
             val months = getMonths(elapsedTime)
             return if (months > 1) "$months months ago" else "$months month ago"
         }
@@ -65,7 +67,10 @@ fun Long.laymanTime(): String {
 }
 
 fun String.splitIntoTitleAndArtist(): List<String> {
-    return this.split("by")
+    val lastIndexOfTitle = this.lastIndexOf(SPLIT_BY)
+    val title = this.substring(0, lastIndexOfTitle)
+    val artist = this.substring(lastIndexOfTitle + SPLIT_BY.length)
+    return listOf(title.trim(), artist.trim())
 }
 
 private fun isLocationPermissionGranted(context: Context): Boolean {
