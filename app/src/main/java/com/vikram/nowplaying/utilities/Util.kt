@@ -1,5 +1,14 @@
 package com.vikram.nowplaying.utilities
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.support.v4.content.ContextCompat
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.Tasks
+
 private const val second = 1
 private const val minute = second * 60
 private const val hour = minute * 60
@@ -57,4 +66,17 @@ fun Long.laymanTime(): String {
 
 fun String.splitIntoTitleAndArtist(): List<String> {
     return this.split("by")
+}
+
+private fun isLocationPermissionGranted(context: Context): Boolean {
+    return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+}
+
+@SuppressLint("MissingPermission")
+fun getCurrentLocation(context: Context): Location? {
+    if (isLocationPermissionGranted(context)) {
+        val locationTask = LocationServices.getFusedLocationProviderClient(context).lastLocation
+        return Tasks.await(locationTask)
+    }
+    return null
 }

@@ -8,7 +8,9 @@ import com.vikram.nowplaying.utilities.laymanTime
 data class Song(var timestamp: Long,
                 var songText: String,
                 var title: String,
-                var artist: String) {
+                var artist: String,
+                var lat: Double?,
+                var lng: Double?) {
     @PrimaryKey(autoGenerate = true) var id: Int? = null
 
     fun getLaymanTime(): String {
