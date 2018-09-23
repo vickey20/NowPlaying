@@ -51,6 +51,6 @@ class NotificationService: NotificationListenerService() {
 
     private fun getSongObj(timestamp: Long, songText: String, location: Location?): Song {
         val titleAndArtist = songText.splitIntoTitleAndArtist()
-        return Song(timestamp, songText, titleAndArtist[0].trim(), titleAndArtist[1].trim(), location?.latitude, location?.longitude)
+        return Song(timestamp, songText, titleAndArtist[0], titleAndArtist[1], location?.latitude, location?.longitude)
     }
 }
