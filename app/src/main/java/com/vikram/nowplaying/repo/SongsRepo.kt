@@ -11,7 +11,6 @@ class SongsRepo {
 
     private var songsDao: SongDao? = null
     private var songs: LiveData<List<Song>>? = null
-    //private var executorService = Executors.newSingleThreadExecutor()
 
     init {
         var db = AppDatabase.getDatabase(context?.applicationContext!!)
@@ -31,12 +30,6 @@ class SongsRepo {
         }
     }
 
-//    fun saveSong(song: Song) {
-//        if (shouldSaveToDB(song)) {
-//            executorService.execute { songsDao?.insert(song) }
-//        }
-//    }
-
     fun getAllSongs(): LiveData<List<Song>>? {
         return songsDao?.getAllSongs()
     }
@@ -47,11 +40,6 @@ class SongsRepo {
 
     fun saveSong(song: Song) {
         GlobalScope.launch{
-//            val latestSong = async { songsDao?.getLatestSong() }.await()
-//            if (latestSong?.songText != song.songText) {
-//                async { songsDao?.insert(song) }
-//            }
-
             val shouldSaveToDb = async { shouldSaveToDB(song) }.await()
             if (shouldSaveToDb) {
                 async { songsDao?.insert(song) }
