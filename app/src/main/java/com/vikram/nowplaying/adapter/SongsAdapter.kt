@@ -18,7 +18,6 @@ class SongsAdapter: RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
             itemView.tvSongName.text = song.title
             itemView.tvArtistName.text = song.artist
             itemView.tvTime.text = song.getLaymanTime()
-            Log.d("SongsAdapter", "text: ${song.songText}")
         }
     }
 
