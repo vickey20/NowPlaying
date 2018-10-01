@@ -9,10 +9,11 @@
         android:id="@+id/tvSongName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/tvTime"
         android:text="Song Name"
         android:textSize="18dp"
-        android:textStyle="bold"
-        android:layout_alignParentLeft="true"/>
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/tvArtistName"
@@ -21,6 +22,7 @@
         android:layout_below="@id/tvSongName"
         android:text="Artist Name"
         android:textSize="16dp"
+        android:layout_toLeftOf="@id/tvTime"
         android:layout_alignParentLeft="true"/>
 
     <TextView
@@ -28,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="time"
-        android:textSize="14dp"
+        android:textSize="12dp"
         android:layout_marginLeft="16dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"/>
