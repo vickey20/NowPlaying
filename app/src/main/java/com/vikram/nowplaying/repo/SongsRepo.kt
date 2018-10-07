@@ -53,4 +53,8 @@ class SongsRepo {
             async { songsDao?.update(song) }
         }
     }
+
+    fun getFavorites(): LiveData<List<Song>>? {
+        return songsDao?.getFavorites()
+    }
 }

@@ -26,4 +26,8 @@ class SongsViewModel(application: Application) : AndroidViewModel(application) {
         if (song.favorite == 1) song.favorite = 0 else song.favorite = 1
         songsRepo?.update(song)
     }
+
+    fun getFavorites(): LiveData<List<Song>>? {
+        return songsRepo?.getFavorites()
+    }
 }

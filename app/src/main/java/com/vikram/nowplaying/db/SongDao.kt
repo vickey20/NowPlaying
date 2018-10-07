@@ -25,6 +25,6 @@ interface SongDao {
     @Query("SELECT * FROM $TABLE_SONGS WHERE $TIMESTAMP = (SELECT MAX($TIMESTAMP) FROM $TABLE_SONGS)")
     fun getLatestSong(): Song
 
-    @Query("SELECT * FROM $TABLE_SONGS WHERE $FAVORITE = 1")
+    @Query("SELECT * FROM $TABLE_SONGS WHERE $FAVORITE = 1 ORDER BY $ID DESC")
     fun getFavorites(): LiveData<List<Song>>
 }

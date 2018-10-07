@@ -1,4 +1,4 @@
-package com.vikram.nowplaying.ui.activity
+package com.vikram.nowplaying.ui.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,7 @@ class SongsFragment: Fragment() {
 
     private var songsAdapter = SongsAdapter { position, viewType ->
         when (viewType) {
-            ViewType.ROW ->  onSongClicked(position)
+            ViewType.ROW ->  onItemClick(position)
             ViewType.FAVORITE -> onFavoriteClicked(position)
         }
     }
@@ -31,7 +30,7 @@ class SongsFragment: Fragment() {
         viewModel.onFavoriteClicked(position)
     }
 
-    private fun onSongClicked(position: Int) {
+    private fun onItemClick(position: Int) {
         // TODO open songs detail page
     }
 
