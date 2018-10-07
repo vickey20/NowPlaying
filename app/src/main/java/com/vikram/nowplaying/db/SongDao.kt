@@ -1,9 +1,7 @@
 package com.vikram.nowplaying.db
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.vikram.nowplaying.utilities.FAVORITE
 import com.vikram.nowplaying.utilities.ID
 import com.vikram.nowplaying.utilities.TABLE_SONGS
@@ -15,10 +13,10 @@ interface SongDao {
     @Insert
     fun insert(song: Song)
 
-    @Insert
+    @Update
     fun update(song: Song)
 
-    @Insert
+    @Delete
     fun delete(song: Song)
 
     @Query("SELECT * FROM $TABLE_SONGS ORDER BY $ID DESC")

@@ -20,4 +20,10 @@ class SongsViewModel(application: Application) : AndroidViewModel(application) {
     fun getAllSongs(): LiveData<List<Song>>? {
         return songs
     }
+
+    fun onFavoriteClicked(position: Int) {
+        var song = songs?.value!![position]
+        if (song.favorite == 1) song.favorite = 0 else song.favorite = 1
+        songsRepo?.update(song)
+    }
 }

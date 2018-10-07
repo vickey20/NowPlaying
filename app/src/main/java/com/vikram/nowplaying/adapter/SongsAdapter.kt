@@ -9,21 +9,37 @@ import com.vikram.nowplaying.db.Song
 import com.vikram.nowplaying.utilities.getLaymanTime
 import kotlinx.android.synthetic.main.songs_list_item.view.*
 
-class SongsAdapter: RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
+enum class ViewType(val type: Int) {
+    ROW(1),
+    FAVORITE(2)
+}
+
+class SongsAdapter(val onClick: (Int, ViewType) -> Unit): RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
 
     var songs = mutableListOf<Song>()
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bind(song: Song) {
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        fun bind(song: Song, position: Int) {
             itemView.tvSongName.text = song.title
             itemView.tvArtistName.text = song.artist
             itemView.tvTime.text = getLaymanTime(itemView.context, song.timestamp)
+
+            if (song.favorite == 1) setFavoriteImage(R.drawable.star_filled_96) else setFavoriteImage(R.drawable.star_96)
+            itemView.favorite.setOnClickListener { onClick(position, ViewType.FAVORITE) }
+        }
+
+        private fun setFavoriteImage(resId: Int) {
+            itemView.favorite.setImageResource(resId)
         }
     }
 
     fun updateList(songs: List<Song>) {
         this.songs.clear()
         this.songs.addAll(songs)
+        notifyAdapterOfListUpdate()
+    }
+
+    private fun notifyAdapterOfListUpdate() {
         notifyDataSetChanged()
     }
 
@@ -34,7 +50,7 @@ class SongsAdapter: RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(songs[position])
+        holder.bind(songs[position], position)
     }
 }
 
