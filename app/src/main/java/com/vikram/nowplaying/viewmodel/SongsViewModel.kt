@@ -11,6 +11,7 @@ class SongsViewModel(application: Application) : AndroidViewModel(application) {
 
     private var songsRepo: SongsRepo? = null
     private var songs: LiveData<List<Song>>? = null
+    private var favSongs: LiveData<List<Song>>? = null
 
     init {
         songsRepo = SongsRepo.getInstance(getApplication())
@@ -19,5 +20,22 @@ class SongsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getAllSongs(): LiveData<List<Song>>? {
         return songs
+    }
+
+    fun onFavoriteClicked(position: Int) {
+        val song = songs?.value!![position]
+        if (song.favorite == 1) song.favorite = 0 else song.favorite = 1
+        songsRepo?.update(song)
+    }
+
+    fun getFavorites(): LiveData<List<Song>>? {
+        favSongs = songsRepo?.getFavorites()
+        return favSongs
+    }
+
+    fun removeFavorite(position: Int) {
+        val song = favSongs?.value!![position]
+        song.favorite = 0
+        songsRepo?.update(song)
     }
 }
