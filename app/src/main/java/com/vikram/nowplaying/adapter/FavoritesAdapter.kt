@@ -1,6 +1,11 @@
 package com.vikram.nowplaying.adapter
 
+/**
+ *   Created by vikramgupta on 10/7/18.
+ */
+
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +15,9 @@ import com.vikram.nowplaying.utilities.ViewType
 import com.vikram.nowplaying.utilities.getLaymanTime
 import kotlinx.android.synthetic.main.songs_list_item.view.*
 
-class SongsAdapter(val onClick: (Int, ViewType) -> Unit): RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
+class FavoritesAdapter(val onClick: (Int, ViewType) -> Unit): RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
 
-    var songs = mutableListOf<Song>()
+    private var songs = mutableListOf<Song>()
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(song: Song, position: Int) {
@@ -20,12 +25,9 @@ class SongsAdapter(val onClick: (Int, ViewType) -> Unit): RecyclerView.Adapter<S
             itemView.tvArtistName.text = song.artist
             itemView.tvTime.text = getLaymanTime(itemView.context, song.timestamp)
 
-            if (song.favorite == 1) setFavoriteImage(R.drawable.star_filled_96) else setFavoriteImage(R.drawable.star_96)
-            itemView.favorite.setOnClickListener { onClick(position, ViewType.FAVORITE) }
-        }
-
-        private fun setFavoriteImage(resId: Int) {
-            itemView.favorite.setImageResource(resId)
+            itemView.favorite.setOnClickListener {
+                onClick(position, ViewType.REMOVE_FAVORITE)
+            }
         }
     }
 
@@ -39,7 +41,7 @@ class SongsAdapter(val onClick: (Int, ViewType) -> Unit): RecyclerView.Adapter<S
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent.inflate(R.layout.songs_list_item))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent.inflate(R.layout.favorites_list_item))
 
     override fun getItemCount(): Int {
         return songs.size

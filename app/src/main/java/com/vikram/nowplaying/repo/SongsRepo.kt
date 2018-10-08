@@ -2,6 +2,7 @@ package com.vikram.nowplaying.repo
 
 import android.arch.lifecycle.LiveData
 import android.content.Context
+import android.util.Log
 import com.vikram.nowplaying.db.AppDatabase
 import com.vikram.nowplaying.db.Song
 import com.vikram.nowplaying.db.SongDao
@@ -45,5 +46,15 @@ class SongsRepo {
                 async { songsDao?.insert(song) }
             }
         }
+    }
+
+    fun update(song: Song) {
+        GlobalScope.launch {
+            async { songsDao?.update(song) }
+        }
+    }
+
+    fun getFavorites(): LiveData<List<Song>>? {
+        return songsDao?.getFavorites()
     }
 }
