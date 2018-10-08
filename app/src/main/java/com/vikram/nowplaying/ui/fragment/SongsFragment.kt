@@ -13,7 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.vikram.nowplaying.R
 import com.vikram.nowplaying.adapter.SongsAdapter
-import com.vikram.nowplaying.adapter.ViewType
+import com.vikram.nowplaying.utilities.ViewType
 import com.vikram.nowplaying.viewmodel.SongsViewModel
 import kotlinx.android.synthetic.main.fragment_songs.*
 

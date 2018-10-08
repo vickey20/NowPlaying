@@ -5,23 +5,29 @@ package com.vikram.nowplaying.adapter
  */
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.vikram.nowplaying.R
 import com.vikram.nowplaying.db.Song
+import com.vikram.nowplaying.utilities.ViewType
 import com.vikram.nowplaying.utilities.getLaymanTime
 import kotlinx.android.synthetic.main.songs_list_item.view.*
 
 class FavoritesAdapter(val onClick: (Int, ViewType) -> Unit): RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
 
-    var songs = mutableListOf<Song>()
+    private var songs = mutableListOf<Song>()
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(song: Song, position: Int) {
             itemView.tvSongName.text = song.title
             itemView.tvArtistName.text = song.artist
             itemView.tvTime.text = getLaymanTime(itemView.context, song.timestamp)
+
+            itemView.favorite.setOnClickListener {
+                onClick(position, ViewType.REMOVE_FAVORITE)
+            }
         }
     }
 

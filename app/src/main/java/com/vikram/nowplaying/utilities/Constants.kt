@@ -18,3 +18,9 @@ const val FAVORITE = "favorite"
 // Notification listener
 const val GOOGLE_INTELLIGENT_SENSE_PACKAGE_NAME = "com.google.intelligence.sense"
 const val GOOGLE_INTELLIGENT_SENSE_CHANNEL_NAME = "com.google.intelligence.sense.ambientmusic.MusicNotificationChannel"
+
+enum class ViewType(val type: Int) {
+    ROW(1),
+    FAVORITE(2),
+    REMOVE_FAVORITE(3)
+}

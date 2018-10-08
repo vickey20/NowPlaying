@@ -6,13 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.vikram.nowplaying.R
 import com.vikram.nowplaying.db.Song
+import com.vikram.nowplaying.utilities.ViewType
 import com.vikram.nowplaying.utilities.getLaymanTime
 import kotlinx.android.synthetic.main.songs_list_item.view.*
-
-enum class ViewType(val type: Int) {
-    ROW(1),
-    FAVORITE(2)
-}
 
 class SongsAdapter(val onClick: (Int, ViewType) -> Unit): RecyclerView.Adapter<SongsAdapter.ViewHolder>() {
 

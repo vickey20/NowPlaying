@@ -8,12 +8,13 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.vikram.nowplaying.R
 import com.vikram.nowplaying.adapter.FavoritesAdapter
-import com.vikram.nowplaying.adapter.ViewType
+import com.vikram.nowplaying.utilities.ViewType
 import com.vikram.nowplaying.viewmodel.SongsViewModel
 import kotlinx.android.synthetic.main.fragment_songs.*
 
@@ -26,7 +27,12 @@ class FavoritesFragment: Fragment() {
     private var favoritesAdapter = FavoritesAdapter { position, viewType ->
         when (viewType) {
             ViewType.ROW ->  onItemClick(position)
+            ViewType.REMOVE_FAVORITE -> onRemoveFromFavorites(position)
         }
+    }
+
+    private fun onRemoveFromFavorites(position: Int) {
+        viewModel.removeFavorite(position)
     }
 
     private fun onItemClick(position: Int) {
