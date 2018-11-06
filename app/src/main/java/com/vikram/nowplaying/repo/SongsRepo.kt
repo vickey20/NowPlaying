@@ -10,22 +10,15 @@ import kotlinx.coroutines.experimental.*
 
 class SongsRepo {
 
-    private var songsDao: SongDao? = null
-    private var songs: LiveData<List<Song>>? = null
-
-    init {
-        var db = AppDatabase.getDatabase(context?.applicationContext!!)
-        songsDao = db.songsDao()
-        songs = songsDao?.getAllSongs()
-    }
-
     companion object {
         @Volatile private var instance: SongsRepo? = null
-        private var context: Context? = null
+        private var songsDao: SongDao? = null
+        private lateinit var db: AppDatabase
 
         fun getInstance(context: Context): SongsRepo {
             return instance?: synchronized(this) {
-                this.context = context
+                db = AppDatabase.getDatabase(context.applicationContext)
+                songsDao = db.songsDao()
                 instance?: SongsRepo().also { instance = it }
             }
         }
